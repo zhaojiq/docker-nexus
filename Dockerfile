@@ -2,9 +2,9 @@ FROM maven:3-jdk-8-alpine AS build
 ARG NEXUS_VERSION=3.13.0
 ARG NEXUS_BUILD=01
 
-RUN wget https://codeload.github.com/sonatype-nexus-community/nexus-repository-helm/zip/master; \
-    unzip master; \
-	mv ./nexus-repository-helm-master /nexus-repository-helm; \
+RUN wget https://github.com/sonatype-nexus-community/nexus-repository-helm/archive/v0.0.5.zip; \
+    unzip v0.0.5.zip; \
+	mv ./nexus-repository-helm-0.0.5 /nexus-repository-helm; \
 	cd /nexus-repository-helm/; sed -i "s/3.13.0-01/${NEXUS_VERSION}-${NEXUS_BUILD}/g" pom.xml; \
     mvn clean package;
 
