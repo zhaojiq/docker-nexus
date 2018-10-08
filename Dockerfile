@@ -11,6 +11,6 @@ RUN wget https://github.com/sonatype-nexus-community/nexus-repository-helm/archi
 FROM quay.io/travelaudience/docker-nexus:3.13.0_alpine_3.8.1
 ARG TARGET_DIR=${NEXUS_HOME}/deploy/
 USER root
-COPY --from=build /nexus-repository-helm/target/nexus-repository-helm-${HELM_VERSION}.jar ${TARGET_DIR}
+COPY --from=build /nexus-repository-helm/target/nexus-repository-helm-0.0.5.jar ${TARGET_DIR}
 USER nexus
 
