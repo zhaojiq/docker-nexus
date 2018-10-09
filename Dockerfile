@@ -76,4 +76,3 @@ ENV INSTALL4J_ADD_VM_PARAMS="-Xms1200m -Xmx1200m"
 COPY --from=build /nexus-repository-helm/target/nexus-repository-helm-0.0.5.jar ${NEXUS_HOME}/deploy/nexus-repository-helm-0.0.5.jar
 
 CMD ["/sbin/runsvdir", "-P", "/etc/service"]
-
