@@ -64,6 +64,7 @@ COPY logback-access.xml ${NEXUS_HOME}/etc/logback/logback-access.xml
 
 # Copy runnable script
 COPY run /etc/service/nexus/run
+RUN  chmod +x /etc/service/nexus/run
 
 VOLUME ${NEXUS_DATA}
 
