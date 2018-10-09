@@ -74,6 +74,9 @@ WORKDIR ${NEXUS_HOME}
 
 ENV INSTALL4J_ADD_VM_PARAMS="-Xms1200m -Xmx1200m"
 
-COPY --from=build /nexus-repository-helm/target/nexus-repository-helm-0.0.5.jar ${NEXUS_HOME}/deploy/nexus-repository-helm-0.0.5.jar
+RUN mkdir -p ${NEXUS_HOME}/system/org/sonatype/nexus/plugins/nexus-repository-helm/0.0.5/; \
+    sed -i 's@nexus-repository-maven</feature>@nexus-repository-maven</feature>\n        <feature version="0.0.5" prerequisite="false" dependency="false">nexus-repository-helm</feature>@g' ${NEXUS_HOME}/system/org/sonatype/nexus/assemblies/nexus-core-feature/${NEXUS_VERSION}/nexus-core-feature-${NEXUS_VERSION}-features.xml; \
+	sed -i 's@<feature name="nexus-repository-maven"@<feature name="nexus-repository-helm" description="org.sonatype.nexus.plugins:nexus-repository-helm" version="0.0.5">\n        <details>org.sonatype.nexus.plugins:nexus-repository-helm</details>\n        <bundle>mvn:org.sonatype.nexus.plugins/nexus-repository-helm/0.0.5</bundle>\n        <bundle>mvn:org.apache.commons/commons-compress/1.16.1</bundle>\n    </feature>\n    <feature name="nexus-repository-maven"@g' /opt/sonatype/nexus/system/org/sonatype/nexus/assemblies/nexus-core-feature/${NEXUS_VERSION}/nexus-core-feature-${NEXUS_VERSION}-features.xml;
+COPY --from=build /nexus-repository-helm/target/nexus-repository-helm-0.0.5.jar ${NEXUS_HOME}/system/org/sonatype/nexus/plugins/nexus-repository-helm/0.0.5/nexus-repository-helm-0.0.5.jar
 
 CMD ["/sbin/runsvdir", "-P", "/etc/service"]
