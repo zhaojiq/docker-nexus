@@ -1,10 +1,10 @@
 FROM maven:3-jdk-8-alpine AS build
-ARG NEXUS_VERSION=3.13.0-01
+ARG NEXUS_VERSION=3.14.0-04
 
 RUN wget https://github.com/sonatype-nexus-community/nexus-repository-helm/archive/v0.0.5.zip; \
     unzip v0.0.5.zip; \
 	mv ./nexus-repository-helm-0.0.5 /nexus-repository-helm; \
-	cd /nexus-repository-helm/; sed -i "s/3.13.0-01/${NEXUS_VERSION}/g" pom.xml; \
+	cd /nexus-repository-helm/; sed -i "s/3.14.0-04/${NEXUS_VERSION}/g" pom.xml; \
     mvn clean package;
 
 
@@ -12,7 +12,7 @@ FROM quay.io/pires/docker-jre:8u171_alpine_3.8.1
 
 LABEL maintainer devops@travelaudience.com
 
-ENV NEXUS_VERSION 3.13.0-01
+ENV NEXUS_VERSION 3.14.0-04
 ENV NEXUS_DOWNLOAD_URL "https://download.sonatype.com/nexus/3"
 ENV NEXUS_TARBALL_URL "${NEXUS_DOWNLOAD_URL}/nexus-${NEXUS_VERSION}-unix.tar.gz"
 ENV NEXUS_TARBALL_ASC_URL "${NEXUS_DOWNLOAD_URL}/nexus-${NEXUS_VERSION}-unix.tar.gz.asc"
